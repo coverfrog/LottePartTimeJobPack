@@ -4,8 +4,7 @@ using UnityEngine;
 [Serializable]
 public class MoveData
 {
-    public Rigidbody rigidBody;
     public Vector2 dir;
-    public float moveSpeed;
-    public float rotSpeed;
+    public float moveSpeed = 3.0f;
+    public float rotSpeed = 5.0f;
 }

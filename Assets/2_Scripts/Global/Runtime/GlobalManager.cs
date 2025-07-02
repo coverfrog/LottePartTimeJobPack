@@ -3,8 +3,11 @@ using UnityEngine;
 public class GlobalManager : Singleton<GlobalManager>
 {
     [SerializeField] private InputHandler mInputHandler;
+    [SerializeField] private CamHandler mCamHandler;
 
     public InputHandler Input => mInputHandler;
+
+    public CamHandler Cam => mCamHandler;
 
     protected override void Awake()
     {
@@ -18,5 +21,6 @@ public class GlobalManager : Singleton<GlobalManager>
     private void Setup()
     {
         mInputHandler.Setup(this);
+        mCamHandler.Setup(this);
     }
 }
