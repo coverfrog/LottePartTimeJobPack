@@ -2,8 +2,6 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-
-
 public class Interact : MonoBehaviour
 {
     [Title("Option")]
@@ -15,13 +13,10 @@ public class Interact : MonoBehaviour
     [Title("Data")]
     [SerializeField] private InteractData mInteractData;
 
+    public InteractData Data => mInteractData;
+
     public void OnDetect(InteractDetect detect)
     {
-        // 현재 상호작용 안되거나 , 홀딩 타입이 실행 중인 경우
-        if (!mInteractData.IsCanInteract || mInteractData.IsInteracting) 
-            return;
-
-        // 상호작용 시작
         OnInteractBegin(detect);
     }
 

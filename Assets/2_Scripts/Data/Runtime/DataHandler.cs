@@ -1,17 +1,20 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class UIHandler : GlobalHandler
+public class DataHandler : GlobalHandler
 {
-    [Title("References")]
-    [SerializeField] private UIPageInteractNotice mUIPageInteractNotice;
 
-    public UIPageInteractNotice InteractNotice => mUIPageInteractNotice;
     
     private GlobalManager _mGlobalManager;
+
+    [ShowInInspector, ReadOnly]
+    public PackGameData PackGame { get; private set; }
+
 
     public override void Setup(GlobalManager globalManager)
     {
         _mGlobalManager = globalManager;
+        
+        PackGame = new PackGameData();
     }
 }

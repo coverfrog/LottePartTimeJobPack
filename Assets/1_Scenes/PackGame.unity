@@ -442,11 +442,10 @@ MonoBehaviour:
   mInteractOption:
     mIsAuto: 0
     mInteractType: 0
-    mCount: 1
-    mStringValue: paperbox12
   mInteractData:
-    mIsCanInteract: 1
-    mIsInteracting: 0
+    mItemAddList:
+    - mItemData: {fileID: 11400000, guid: 29c4e7dfdf858d84b96b12475be716a4, type: 2}
+      mCount: 1
 --- !u!65 &237511643
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -742,11 +741,10 @@ MonoBehaviour:
   mInteractOption:
     mIsAuto: 0
     mInteractType: 0
-    mCount: 1
-    mStringValue: packnet
   mInteractData:
-    mIsCanInteract: 1
-    mIsInteracting: 0
+    mItemAddList:
+    - mItemData: {fileID: 11400000, guid: 555648ad871fd41429f051feaf5b64fd, type: 2}
+      mCount: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,11 +939,10 @@ MonoBehaviour:
   mInteractOption:
     mIsAuto: 0
     mInteractType: 0
-    mCount: 1
-    mStringValue: paperbox6
   mInteractData:
-    mIsCanInteract: 1
-    mIsInteracting: 0
+    mItemAddList:
+    - mItemData: {fileID: 11400000, guid: bf020696c1ada62469842d0972f97d77, type: 2}
+      mCount: 1
 --- !u!65 &331091025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3084,11 +3081,10 @@ MonoBehaviour:
   mInteractOption:
     mIsAuto: 0
     mInteractType: 0
-    mCount: 1
-    mStringValue: paperbag1
   mInteractData:
-    mIsCanInteract: 1
-    mIsInteracting: 0
+    mItemAddList:
+    - mItemData: {fileID: 11400000, guid: a18086cec24d16e479f467d6df9a0cdd, type: 2}
+      mCount: 1
 --- !u!65 &1943848411
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3396,11 +3392,10 @@ MonoBehaviour:
   mInteractOption:
     mIsAuto: 0
     mInteractType: 0
-    mCount: 1
-    mStringValue: paperbag2
   mInteractData:
-    mIsCanInteract: 1
-    mIsInteracting: 0
+    mItemAddList:
+    - mItemData: {fileID: 11400000, guid: d1289d41f83713645ae230a27023af80, type: 2}
+      mCount: 1
 --- !u!65 &2041718578
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,11 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Interact Give", menuName = "Cf/Interact/Give")]
-public class InteractGive : InteractBase
+[CreateAssetMenu(fileName = "Interact Item Add", menuName = "Cf/Interact/Item Add")]
+public class InteractItemAdd : InteractBase
 {
     public override void InteractTab(Interact interact, InteractDetect detect)
     {
-        Debug.Log("전달");
+        GlobalManager.Instance.Data.PackGame.ItemAdd(interact);
     }
 
     public override void InteractHoldBegin(Interact interact, InteractDetect detect)

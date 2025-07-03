@@ -39,6 +39,7 @@ public class InteractDetect : MonoBehaviour
     private void Update()
     {
         Update_Ray();
+        Update_UI();
     }
 
     private void Update_Ray()
@@ -66,12 +67,25 @@ public class InteractDetect : MonoBehaviour
             _mInteractCurrent = null;
             return;
         }
-
+        
         if (!_mInteractCurrent.Option.IsAuto)
         {
             return;
         }
             
         _mInteractCurrent.OnDetect(this);
+    }
+
+    private void Update_UI()
+    {
+        if (_mInteractCurrent)
+        {
+            
+        }
+
+        else
+        {
+            
+        }
     }
 }
