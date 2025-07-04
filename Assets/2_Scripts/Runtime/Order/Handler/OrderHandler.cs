@@ -6,17 +6,19 @@ using Object = UnityEngine.Object;
 
 public class OrderHandler : MonoBehaviour
 {
-    [Title("Option")] 
-    [SerializeField] private bool mIsDebugInput = true;
-    
     [Title("Actor")]
     [SerializeField] private OrderDataCreator mCreator = new OrderDataCreator();
     [SerializeField] private OrderDataPresenter mPresenter = new OrderDataPresenter();
     [SerializeField] private OrderDataReporter mReporter = new OrderDataReporter();
 
-    public event Action<OrderData> OnPresentAction; 
     
-    #region On Game Start
+    public event Action OnCreateAction;
+    public event Action<OrderData> OnPresentAction;
+    public event Action<OrderData> OnReportCorrectAction;
+    public event Action<OrderData, uint> OnReportWrongAction; 
+    
+    
+    #region OnGameStart
 
     /// <summary>
     /// 
@@ -24,16 +26,30 @@ public class OrderHandler : MonoBehaviour
     /// <param name="sender"></param>
     public void OnGameStart(Object sender)
     {
-        // 문제 생성
-        List<OrderData> orderDataList = mCreator.Create();
-        
-        // 인덱스 초기화, 문제 제시
-        mPresenter.Init(orderDataList, OnPresent);
-        mPresenter.Present();
+        // 생성자 초기화, 생성
+        mCreator.Init(OnCreate);
+        mCreator.Create();
     }
 
     #endregion
 
+    #region OnCreate
+
+    private void OnCreate(List<OrderData> orderDataList)
+    {
+        // 제시자 초기화, 제시
+        mPresenter.Init(orderDataList, OnPresent);
+        mPresenter.Present();
+        
+        // 답변자 초기화
+        mReporter.Init(OnReportCorrect, OnReportWrong);
+        
+        // 액션
+        OnCreateAction?.Invoke();
+    }
+
+    #endregion
+    
     #region OnPresent
 
     /// <summary>
@@ -50,36 +66,30 @@ public class OrderHandler : MonoBehaviour
     }
 
     #endregion
-    
-    #region Update
 
-    private void Update()
+    #region OnReportCorrect
+
+    private void OnReportCorrect(OrderData orderData)
     {
-#if UNITY_EDITOR
-        Update_DebugInput();
+#if UNITY_EDITOR && true
+        Debug.Log("정답");        
 #endif
-    }
-
-    private void Update_DebugInput()
-    {
-        if (!mIsDebugInput)
-        {
-            return;
-        }
         
-        // 디버그 입력 ( 1 ~ 9 )
-        for (int idx = (int)KeyCode.Alpha1; idx <= (int)KeyCode.Alpha9; ++idx)
-        {
-            if (!Input.GetKeyDown((KeyCode)idx))
-            {
-                continue;
-            }
-
-            int relativeIdx = idx - (int)KeyCode.Alpha1;
-            
-            mReporter.Report((uint)relativeIdx);
-        }
+        OnReportCorrectAction?.Invoke(orderData);
     }
-    
+
+    #endregion
+
+    #region OnReportWrong
+
+    private void OnReportWrong(OrderData orderData, uint itemIdx)
+    {
+#if UNITY_EDITOR && true
+        Debug.Log("오답");        
+#endif
+        
+        OnReportWrongAction?.Invoke(orderData, itemIdx);
+    }
+
     #endregion
 }

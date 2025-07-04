@@ -5,20 +5,41 @@ using UnityEngine;
 [Serializable]
 public class OrderDataReporter
 {
-    [Title("Debug")]
-    [SerializeField, Tooltip(OrderDataToolTip)] private OrderData mOrderData;
+    [ShowInInspector, ReadOnly] private OrderData _mOrderData;
+    
+    private Action<OrderData> _mOnCorrect;
+    private Action<OrderData, uint> _mOnWrong;
 
-    private const string OrderDataToolTip = "Debug 하기 편하게 하기 위해 Inspector 에서도 보이게 설정";
+    public void Init(Action<OrderData> onCorrect, Action<OrderData, uint> onWrong)
+    {
+        _mOnCorrect = onCorrect;
+        _mOnWrong = onWrong;
+    }
     
     public void OnPresent(OrderData orderData)
     {
-        mOrderData = orderData;
+        _mOrderData = orderData;
     }
     
-    public void Report(uint inputIdx)
+    public void Report(uint laneIdx, uint productIdx)
     {
-        bool isMatchLane = inputIdx == mOrderData.LaneIdx;
-        
-        Debug.Log($"isMatchLane : {isMatchLane}");
+        // todo : 맞는 라인 일 때만 반영, 추후 변경 가능성 있음
+        bool isMatchLane = laneIdx == _mOrderData.LaneIdx;
+        if (!isMatchLane)
+        {
+            return;
+        }
+
+        // todo : 상품 맞는지 여부
+        bool isCorrect = productIdx == _mOrderData.ItemIdx;
+        if (isCorrect)
+        {
+            _mOnCorrect?.Invoke(_mOrderData);
+        }
+
+        else
+        {
+            _mOnWrong?.Invoke(_mOrderData, productIdx);
+        }
     }
 }
