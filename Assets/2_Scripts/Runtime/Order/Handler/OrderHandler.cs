@@ -11,12 +11,13 @@ public class OrderHandler : MonoBehaviour
     [SerializeField] private OrderDataPresenter mPresenter = new OrderDataPresenter();
     [SerializeField] private OrderDataReporter mReporter = new OrderDataReporter();
 
+    [Title("References")]
+    [SerializeField] private OrderDesk mDesk;
     
     public event Action OnCreateAction;
     public event Action<OrderData> OnPresentAction;
     public event Action<OrderData> OnReportCorrectAction;
     public event Action<OrderData, uint> OnReportWrongAction; 
-    
     
     #region OnGameStart
 
@@ -24,8 +25,11 @@ public class OrderHandler : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="sender"></param>
-    public void OnGameStart(Object sender)
+    public void OnStart(Object sender)
     {
+        // 하위 컴포넌트 초기화
+        mDesk.OnStart(this);
+        
         // 생성자 초기화, 생성
         mCreator.Init(OnCreate);
         mCreator.Create();

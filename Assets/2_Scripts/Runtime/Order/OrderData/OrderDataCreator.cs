@@ -24,12 +24,10 @@ public class OrderDataCreator
 
         for (uint createdIdx = 0; createdIdx < mLaneCount; ++createdIdx)
         {
-            uint laneIdx = (uint)Random.Range(0, mLaneCount);
-            
             // todo : 이 부분은 아이템 부분 완성되면 바꿀 것 
             uint itemIdx = (uint)Random.Range(0, 5);
             
-            OrderData orderData = new OrderData(createdIdx, laneIdx, itemIdx);
+            OrderData orderData = new OrderData(createdIdx, itemIdx);
 
             result.Add(orderData);
         }

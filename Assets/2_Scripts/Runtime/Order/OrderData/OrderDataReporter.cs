@@ -21,15 +21,8 @@ public class OrderDataReporter
         _mOrderData = orderData;
     }
     
-    public void Report(uint laneIdx, uint productIdx)
+    public void Report(uint productIdx)
     {
-        // todo : 맞는 라인 일 때만 반영, 추후 변경 가능성 있음
-        bool isMatchLane = laneIdx == _mOrderData.LaneIdx;
-        if (!isMatchLane)
-        {
-            return;
-        }
-
         // todo : 상품 맞는지 여부
         bool isCorrect = productIdx == _mOrderData.ItemIdx;
         if (isCorrect)

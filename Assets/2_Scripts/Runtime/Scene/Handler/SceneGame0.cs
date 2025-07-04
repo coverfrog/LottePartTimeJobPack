@@ -14,7 +14,7 @@ public class SceneGame0 : SceneGame
         base.Start();
         
         //
-        mOrderHandler.OnGameStart(this);
+        mOrderHandler.OnStart(this);
     }
 
     #endregion

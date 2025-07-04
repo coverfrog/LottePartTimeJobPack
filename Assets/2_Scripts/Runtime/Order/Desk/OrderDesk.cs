@@ -1,16 +1,41 @@
+using System;
 using UnityEngine;
 
 public class OrderDesk : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private OrderHandler _mOrderHandler;
+    
+    #region OnStart
+
+    public void OnStart(OrderHandler orderHandler)
     {
+        // value
+        _mOrderHandler = orderHandler;
         
+        // event
+        orderHandler.OnPresentAction += OnPresent;
     }
 
-    // Update is called once per frame
-    void Update()
+    #endregion
+    
+    #region OnDestroy
+
+    private void OnDestroy()
     {
-        
+        // event
+        _mOrderHandler.OnPresentAction -= OnPresent;
     }
+
+    #endregion
+
+    #region OnPresent
+
+    private void OnPresent(OrderData orderData)
+    {
+        Debug.Log("Present!");
+    }
+
+    #endregion
+
+
 }
