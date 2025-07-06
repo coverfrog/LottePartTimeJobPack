@@ -5,6 +5,12 @@ using UnityEngine.Pool;
 [Serializable]
 public class ItemPool : PoolBase<Item>
 {
+    public ItemPool(ItemData itemData)
+    {
+        mCodeName = itemData.CodeName;
+        mPrefab = itemData.Prefab;
+    }
+    
     protected override Item OnCreate()
     {
         return null;

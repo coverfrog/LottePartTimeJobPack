@@ -25,9 +25,9 @@ public class OrderDataCreator
         for (uint createdIdx = 0; createdIdx < mLaneCount; ++createdIdx)
         {
             // todo : 이 부분은 아이템 부분 완성되면 바꿀 것 
-            uint itemIdx = (uint)Random.Range(0, 5);
+            string itemCodeName = Random.Range(0, 5).ToString();
             
-            OrderData orderData = new OrderData(createdIdx, itemIdx);
+            OrderData orderData = new OrderData(createdIdx, itemCodeName);
 
             result.Add(orderData);
         }

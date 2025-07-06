@@ -12,22 +12,30 @@ public enum PoolType
 [Serializable]
 public abstract class PoolBase<T0> where T0 : class
 {
-    [Title("Option")]
-    [SerializeField] protected PoolType mPoolType;
-    [SerializeField] protected bool mIsCollectionCheck;
-    [SerializeField] protected uint mDefaultCapacity = 10;
-    [SerializeField] protected uint mMaxSize = 10000;
+    [Title("Value")] 
+    [SerializeField] protected string mCodeName;
+    [SerializeField] protected T0 mPrefab;
+
+    [Title("Option")] 
+    [SerializeField] protected PoolOption<T0> mOption = new PoolOption<T0>();
+
+    public string CodeName => mCodeName;
+
+    public T0 Prefab => mPrefab;
+    
+    public PoolOption<T0> Option => mOption;
     
     public IObjectPool<T0> Pool { get; private set; }
-
-    public virtual void Init(params object[] args)
+    
+    public virtual void Init()
     {
-        int defaultCapacity = (int)mDefaultCapacity;
-        int maxSize = (int)mMaxSize;
+        var collectionCheck = mOption.IsCollectionCheck;
+        var defaultCapacity = mOption.DefaultCapacity;
+        var maxSize = mOption.MaxSize;
 
-        Pool = mPoolType == PoolType.ObjectPool
-            ? new ObjectPool<T0>(OnCreate, OnGet, OnRelease, OnDestroy, mIsCollectionCheck, defaultCapacity, maxSize)
-            : new LinkedPool<T0>(OnCreate, OnGet, OnRelease, OnDestroy, mIsCollectionCheck, maxSize);
+        Pool = mOption.PoolType == PoolType.ObjectPool
+            ? new ObjectPool<T0>(OnCreate, OnGet, OnRelease, OnDestroy, collectionCheck, defaultCapacity, maxSize)
+            : new LinkedPool<T0>(OnCreate, OnGet, OnRelease, OnDestroy, collectionCheck, maxSize);
     }
 
     protected abstract T0 OnCreate();

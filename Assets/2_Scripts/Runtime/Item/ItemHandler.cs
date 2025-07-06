@@ -1,21 +1,27 @@
 using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class ItemHandler : MonoBehaviour
 {
-    [Title("Actor")]
-    [SerializeField] private ItemPool mItemPool;
+    [Title("Actor")] 
+    [SerializeField] private ItemDataDb mItemDataDb;
+    [SerializeField] private ItemPoolGroup mItemPoolGroup;
     
     public void OnStart(Object sender)
     {
-        // Pool 초기화
-        mItemPool.Init();
+        mItemDataDb.Init(OnItemDataLoadComplete);
+    }
+
+    private void OnItemDataLoadComplete(List<ItemData> itemDataList)
+    {
+        mItemPoolGroup.Init(itemDataList);
     }
 
     public void OnPresent(OrderData orderData)
     {
-        Debug.Log(orderData.ItemIdx);
+        Debug.Log(orderData.ItemCodeName);
     }
 }

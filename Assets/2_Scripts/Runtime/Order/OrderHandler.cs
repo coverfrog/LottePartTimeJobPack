@@ -14,7 +14,7 @@ public class OrderHandler : MonoBehaviour
     public event Action OnCreateAction;
     public event Action<OrderData> OnPresentAction;
     public event Action<OrderData> OnReportCorrectAction;
-    public event Action<OrderData, uint> OnReportWrongAction; 
+    public event Action<OrderData, string> OnReportWrongAction; 
     
     #region OnGameStart
 
@@ -80,13 +80,13 @@ public class OrderHandler : MonoBehaviour
 
     #region OnReportWrong
 
-    private void OnReportWrong(OrderData orderData, uint itemIdx)
+    private void OnReportWrong(OrderData orderData, string itemCodeName)
     {
 #if UNITY_EDITOR && true
         Debug.Log("오답");        
 #endif
         
-        OnReportWrongAction?.Invoke(orderData, itemIdx);
+        OnReportWrongAction?.Invoke(orderData, itemCodeName);
     }
 
     #endregion

@@ -8,9 +8,9 @@ public class OrderDataReporter
     [ShowInInspector, ReadOnly] private OrderData _mOrderData;
     
     private Action<OrderData> _mOnCorrect;
-    private Action<OrderData, uint> _mOnWrong;
+    private Action<OrderData, string> _mOnWrong;
 
-    public void Init(Action<OrderData> onCorrect, Action<OrderData, uint> onWrong)
+    public void Init(Action<OrderData> onCorrect, Action<OrderData, string> onWrong)
     {
         _mOnCorrect = onCorrect;
         _mOnWrong = onWrong;
@@ -21,10 +21,10 @@ public class OrderDataReporter
         _mOrderData = orderData;
     }
     
-    public void Report(uint productIdx)
+    public void Report(string itemCodeName)
     {
         // todo : 상품 맞는지 여부
-        bool isCorrect = productIdx == _mOrderData.ItemIdx;
+        bool isCorrect = itemCodeName == _mOrderData.ItemCodeName;
         if (isCorrect)
         {
             _mOnCorrect?.Invoke(_mOrderData);
@@ -32,7 +32,7 @@ public class OrderDataReporter
 
         else
         {
-            _mOnWrong?.Invoke(_mOrderData, productIdx);
+            _mOnWrong?.Invoke(_mOrderData, itemCodeName);
         }
     }
 }

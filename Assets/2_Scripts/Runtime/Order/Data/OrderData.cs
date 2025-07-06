@@ -5,13 +5,13 @@ using UnityEngine;
 public class OrderData
 {
     [SerializeField] private uint mCreatedIdx;
-    [SerializeField] private uint mItemIdx;
+    [SerializeField] private string mItemCodeName;
 
-    public uint ItemIdx => mItemIdx;
+    public string ItemCodeName => mItemCodeName;
     
-    public OrderData(uint createdIdx, uint itemIdx)
+    public OrderData(uint createdIdx, string itemCodeName)
     {
         mCreatedIdx = createdIdx;
-        mItemIdx = itemIdx;
+        mItemCodeName = itemCodeName;
     }
 }
