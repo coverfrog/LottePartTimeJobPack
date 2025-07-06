@@ -7,12 +7,9 @@ using Object = UnityEngine.Object;
 public class OrderHandler : MonoBehaviour
 {
     [Title("Actor")]
-    [SerializeField] private OrderDataCreator mCreator = new OrderDataCreator();
+    [SerializeField] private OrderDataCreator mDataCreator = new OrderDataCreator();
     [SerializeField] private OrderDataPresenter mPresenter = new OrderDataPresenter();
     [SerializeField] private OrderDataReporter mReporter = new OrderDataReporter();
-
-    [Title("References")]
-    [SerializeField] private OrderDesk mDesk;
     
     public event Action OnCreateAction;
     public event Action<OrderData> OnPresentAction;
@@ -27,12 +24,9 @@ public class OrderHandler : MonoBehaviour
     /// <param name="sender"></param>
     public void OnStart(Object sender)
     {
-        // 하위 컴포넌트 초기화
-        mDesk.OnStart(this);
-        
         // 생성자 초기화, 생성
-        mCreator.Init(OnCreate);
-        mCreator.Create();
+        mDataCreator.Init(OnCreate);
+        mDataCreator.Create();
     }
 
     #endregion
