@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8128912325761862773}
   - component: {fileID: 260802594370128722}
   m_Layer: 0
-  m_Name: Pack Net
+  m_Name: PackNet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

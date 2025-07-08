@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Items
+  m_EditorClassIdentifier: 
+  m_GroupName: Items
+  m_GUID: 79fee37d967b2024e90a6a0c3fcc32f6
+  m_SerializeEntries:
+  - m_GUID: 017b62cd0f17d1843a17901ac9f006b3
+    m_Address: Assets/100_ItemData/Prefabs/PackBox12.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a8a11179fa25454d89ae078e1c78e0e
+    m_Address: Assets/100_ItemData/Prefabs/PackPaper1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72832d6d01ef0fd4db38dbef66b52812
+    m_Address: Assets/100_ItemData/Prefabs/PackNet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf4f39e1c277f5c40b3db8666d8fc14e
+    m_Address: Assets/100_ItemData/Prefabs/PackBox6.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d25d82a131c969d4ca760a332cf5b3af
+    m_Address: Assets/100_ItemData/Prefabs/PackPaper2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 718135f839d2352408b19bf15ea06585, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 11cf637cff792f74cbfe5ec3da673ffd, type: 2}
+    - {fileID: 11400000, guid: 5c2167c10c9cee2488925353d431d04c, type: 2}
