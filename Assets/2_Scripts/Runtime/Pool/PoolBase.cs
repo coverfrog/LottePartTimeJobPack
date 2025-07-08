@@ -26,8 +26,8 @@ public abstract class PoolBase<T0> where T0 : class
     public PoolOption<T0> Option => mOption;
     
     public IObjectPool<T0> Pool { get; private set; }
-    
-    public virtual void Init()
+
+    protected PoolBase()
     {
         var collectionCheck = mOption.IsCollectionCheck;
         var defaultCapacity = mOption.DefaultCapacity;

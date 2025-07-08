@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,16 +19,19 @@ public class OrderDataCreator
         _mOnCreate = onCreate;
     }
     
-    public List<OrderData> Create()
+    public List<OrderData> Create(List<ItemData> itemDataList)
     {
+        // todo : 전체 중에서 Order 아이템만 분리
+        List<ItemData> target = itemDataList.Where(d => d.IsOrderItem).ToList();
         List<OrderData> result = new List<OrderData>((int)mCreateCount);
 
         for (uint createdIdx = 0; createdIdx < mLaneCount; ++createdIdx)
         {
-            // todo : 이 부분은 아이템 부분 완성되면 바꿀 것 
-            string itemCodeName = Random.Range(0, 5).ToString();
+            int idx = Random.Range(0, target.Count);
+
+            ItemData itemData = target[idx];
             
-            OrderData orderData = new OrderData(createdIdx, itemCodeName);
+            OrderData orderData = new OrderData(createdIdx, itemData.CodeName);
 
             result.Add(orderData);
         }

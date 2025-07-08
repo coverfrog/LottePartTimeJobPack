@@ -7,6 +7,13 @@ public class SceneGame0 : SceneGame
     [Title("References")]
     [SerializeField] private OrderHandler mOrderHandler;
     [SerializeField] private ItemHandler mItemHandler;
+    [SerializeField] private InputHandler mInputHandler;
+
+    [Title("References")] 
+    [SerializeField] private PlayerCtrl mPlayerCtrl;
+
+    [Title("References")] 
+    [SerializeField] private UIGame0 mUIGame0;
     
     #region Start
 
@@ -15,12 +22,31 @@ public class SceneGame0 : SceneGame
         // base
         base.Start();
         
-        // 이벤트 연결
+        /*
+            이벤트 연결 시작
+         */
+        
+        // 문제가 출제되는 시점 -> 아이템 핸들러에 전달 ( 스폰 )
         mOrderHandler.OnPresentAction += mItemHandler.OnPresent;
+
+        // 아이템 Pool 생성 완료 시점
+        mItemHandler.OnPoolLoadComplete += (itemDataList) =>
+        {
+            mOrderHandler.Create(itemDataList);
+        };
+
+        // Input 시스템 Move 연결
+        if (mPlayerCtrl.Move)
+        {
+            mInputHandler.OnMoveBegin += mPlayerCtrl.Move.OnInputMoveBegin;
+            mInputHandler.OnMoving += mPlayerCtrl.Move.OnInputMoving;
+            mInputHandler.OnMoveEnd += mPlayerCtrl.Move.OnInputMoveEnd;
+        }
         
         // 하위 컴포넌트 호출
         mOrderHandler.OnStart(this);
         mItemHandler.OnStart(this);
+        mInputHandler.OnStart(this);
     }
 
     #endregion
@@ -31,6 +57,14 @@ public class SceneGame0 : SceneGame
     {
         // 이벤트 해제
         mOrderHandler.OnPresentAction -= mItemHandler.OnPresent;
+
+        // ReSharper disable once InvertIf
+        if (mPlayerCtrl.Move)
+        {
+            mInputHandler.OnMoveBegin -= mPlayerCtrl.Move.OnInputMoveBegin;
+            mInputHandler.OnMoving -= mPlayerCtrl.Move.OnInputMoving;
+            mInputHandler.OnMoveEnd -= mPlayerCtrl.Move.OnInputMoveEnd;
+        }
     }
 
     #endregion

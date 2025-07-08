@@ -1,18 +1,23 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Pool;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
+using Object = UnityEngine.Object;
 
 [Serializable]
 public class ItemPool : PoolBase<Item>
 {
-    public bool IsItemLoaded { get; private set; }
+    private const int LoadRequireCount = 1;
+
+    private Action _mOnLoadComplete;
+
+    private int _mLoadCount;
     
-    public ItemPool(ItemData itemData)
+    public ItemPool(ItemData itemData, Action onLoadComplete) 
     {
+        // action
+        _mLoadCount = 0;
+        _mOnLoadComplete = onLoadComplete;
+        
         // value
         mCodeName = itemData.CodeName;
         
@@ -46,19 +51,31 @@ public class ItemPool : PoolBase<Item>
             // item
             if (!handle.Result.TryGetComponent(out Item item))
             {
-#if UNITY_EDITOR
-                Debug.LogError("don't have item component");
-#endif
+                CLog.Log("아이템 컴포넌트가 존재하지 않습니다.");
                 return;
             }
 
             mPrefab = item;
+
+            OnLoadComplete();
         };
+    }
+
+    private void OnLoadComplete()
+    {
+        _mLoadCount += 1;
+
+        if (_mLoadCount < LoadRequireCount)
+        {
+            return;
+        }
+        
+        _mOnLoadComplete?.Invoke();
     }
     
     protected override Item OnCreate()
     {
-        return null;
+        return Object.Instantiate(mPrefab);
     }
 
     protected override void OnGet(Item obj)

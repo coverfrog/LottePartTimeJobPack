@@ -17,4 +17,9 @@ public class ItemData : ScriptableObject
 
     public AssetReference PrefabPath => mPrefabPath;
     public AssetReference IconPath => mIconPath;
+
+    [Title("Option")]
+    [SerializeField] private bool mIsOrderItem;
+
+    public bool IsOrderItem => mIsOrderItem;
 }

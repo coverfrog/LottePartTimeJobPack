@@ -16,17 +16,22 @@ public class OrderHandler : MonoBehaviour
     public event Action<OrderData> OnReportCorrectAction;
     public event Action<OrderData, string> OnReportWrongAction; 
     
-    #region OnGameStart
+    #region OnStart
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
     public void OnStart(Object sender)
+    {
+    
+    }
+
+    #endregion
+
+    #region Create
+
+    public void Create(List<ItemData> itemDataList)
     {
         // 생성자 초기화, 생성
         mDataCreator.Init(OnCreate);
-        mDataCreator.Create();
+        mDataCreator.Create(itemDataList);
     }
 
     #endregion
@@ -35,6 +40,8 @@ public class OrderHandler : MonoBehaviour
 
     private void OnCreate(List<OrderData> orderDataList)
     {
+        CLog.Log("주문 정보 생성 완료");
+        
         // 제시자 초기화, 제시
         mPresenter.Init(orderDataList, OnPresent);
         mPresenter.Present();
@@ -56,6 +63,8 @@ public class OrderHandler : MonoBehaviour
     /// <param name="orderData"></param>
     private void OnPresent(OrderData orderData)
     {
+        CLog.Log($"문제 제출 : {orderData.ItemCodeName}");
+        
         // 제출자에게 정보 전달
         mReporter.OnPresent(orderData);
         

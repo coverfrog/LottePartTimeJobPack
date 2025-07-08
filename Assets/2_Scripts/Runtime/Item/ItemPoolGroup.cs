@@ -8,57 +8,53 @@ using UnityEngine;
 public class ItemPoolGroup
 {
     [Title("Pool")]
-    [SerializeField] private List<ItemPool> mPoolList = new List<ItemPool>();
-
+    //[ShowInInspector, ReadOnly]
+    private List<ItemPool> _mPoolList = new List<ItemPool>();
+    [ShowInInspector, ReadOnly] 
     private Dictionary<string, ItemPool> _mPoolDict = new Dictionary<string, ItemPool>();
-    private bool _mInit;
-    
-    public Dictionary<string, ItemPool> PoolDict
-    {
-        get
-        {
-            if (!_mInit)
-            {
-                Init();
-            }
 
-            return _mPoolDict;
-        }
-    }
-    
-    public void Init()
+    #region Init
+
+    public void Init(List<ItemData> itemDataList, Action onComplete)
     {
-        _mInit = false;
+        int current = 0;
+        int target = itemDataList.Count;
         
-        if (!CheckCollection())
-            return;
-
-        if (!InitPoolDict())
-            return;
-
-        _mInit = true;
-    }
-
-    public void Init(List<ItemData> itemDataList)
-    {
-        _mInit = false;
-
-        mPoolList = new List<ItemPool>();
+        _mPoolList = new List<ItemPool>(target);
+        
         foreach (ItemData itemData in itemDataList)
         {
-            ItemPool itemPool = new ItemPool(itemData);
+            ItemPool itemPool = new ItemPool(itemData, () =>
+            {
+                current += 1;
+
+                if (current < target)
+                {
+                    return;
+                }
+                       
+                if (!CheckCollection())
+                    return;
+
+                if (!InitPoolDict())
+                    return;
+                
+                onComplete?.Invoke();
+            });
             
-            mPoolList.Add(itemPool);
+            _mPoolList.Add(itemPool);
         }
-        
-        Init();
     }
+    
+    #endregion
+
+    #region CheckCollection
 
     private bool CheckCollection()
     {
         // 직렬화 된 경우 Null 이 된채로 있을 가능성 존재
         
-        if (mPoolList.Any(p => p == null))
+        if (_mPoolList.Any(p => p == null))
         {
 #if UNITY_EDITOR
             Debug.LogError("Pool 안에 Null 존재");
@@ -69,7 +65,7 @@ public class ItemPoolGroup
         // 동일한 codeName 을 가지고 있는 상태라면 
         // 그룹의 개수는 1개를 초과할 것이다.
         
-        bool isOverlap = mPoolList
+        bool isOverlap = _mPoolList
             .GroupBy(p => p.CodeName)
             .Any(g => g.Count() > 1);
 
@@ -82,6 +78,10 @@ public class ItemPoolGroup
         
         return true;
     }
+    
+    #endregion
+
+    #region InitPoolDict
 
     private bool InitPoolDict()
     {
@@ -89,7 +89,7 @@ public class ItemPoolGroup
         _mPoolDict = new Dictionary<string, ItemPool>();
         
         // List 안에 데이터 기반으로 딕셔너리 생성
-        foreach (ItemPool itemPool in mPoolList)
+        foreach (ItemPool itemPool in _mPoolList)
         {
             if (_mPoolDict.TryAdd(itemPool.CodeName, itemPool))
             {
@@ -105,4 +105,23 @@ public class ItemPoolGroup
 
         return true;
     }
+    
+    #endregion
+
+    #region Spawn
+
+    public void Spawn(string codeName, out Item item)
+    {
+        if (!_mPoolDict.ContainsKey(codeName))
+        {
+            CLog.Log("Pool 에서 아이템 획득 실패");
+            item = null;
+            return;
+        }
+
+        _mPoolDict[codeName].Pool.Get(out item);
+    }
+
+    #endregion
+
 }
