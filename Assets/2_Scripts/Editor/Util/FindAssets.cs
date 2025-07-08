@@ -4,7 +4,7 @@ using System.Diagnostics;
 using UnityEditor;
 using UnityEngine;
 
-public static class TypeFinder 
+public static class FindAssets 
 {
     [Conditional("UNITY_EDITOR")]
     public static void Find<T>(ref List<T> source) where T : Object
@@ -25,6 +25,17 @@ public static class TypeFinder
         }
 
         source = result;
+    }
+    
+    [Conditional("UNITY_EDITOR")]
+    public static void RelativePath(Object o, bool includeAssets, ref string relativePath)
+    {
+        relativePath = AssetDatabase.GetAssetPath(o);
+        
+        if (includeAssets) return;
+
+        relativePath = relativePath.Replace("Assets/", "");
+        relativePath = relativePath.Replace("Assets\\", "");
     }
 }
 

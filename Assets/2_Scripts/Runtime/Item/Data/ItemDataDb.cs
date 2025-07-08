@@ -15,15 +15,6 @@ public class ItemDataDb
     [Title("Option")] 
     [SerializeField] private List<ItemData> mItemDataList = new List<ItemData>();
 
-    [Title("Act")]
-    [Conditional("UNITY_EDITOR")]
-    private void Find()
-    {
-#if UNITY_EDITOR
-        TypeFinder.Find(ref mItemDataList);
-#endif
-    }
-    
     public void Init(Action<List<ItemData>> onLoadComplete)
     {
         // todo : 나중에는 db 연결 하자
