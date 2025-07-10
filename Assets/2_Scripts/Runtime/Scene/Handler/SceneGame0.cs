@@ -36,17 +36,13 @@ public class SceneGame0 : SceneGame
         };
 
         // Input 시스템 Move 연결
-        if (mPlayerCtrl.Move)
-        {
-            mInputHandler.OnMoveBegin += mPlayerCtrl.Move.OnInputMoveBegin;
-            mInputHandler.OnMoving += mPlayerCtrl.Move.OnInputMoving;
-            mInputHandler.OnMoveEnd += mPlayerCtrl.Move.OnInputMoveEnd;
-        }
+        mPlayerCtrl?.SubInputEvent(mInputHandler);
         
         // 하위 컴포넌트 호출
         mOrderHandler.OnStart(this);
         mItemHandler.OnStart(this);
         mInputHandler.OnStart(this);
+        mUIGame0.OnStart(this);
     }
 
     #endregion
@@ -55,16 +51,15 @@ public class SceneGame0 : SceneGame
 
     private void OnDestroy()
     {
-        // 이벤트 해제
+        /*
+             이벤트 연결 해제 시작
+        */
+        
         mOrderHandler.OnPresentAction -= mItemHandler.OnPresent;
-
-        // ReSharper disable once InvertIf
-        if (mPlayerCtrl.Move)
-        {
-            mInputHandler.OnMoveBegin -= mPlayerCtrl.Move.OnInputMoveBegin;
-            mInputHandler.OnMoving -= mPlayerCtrl.Move.OnInputMoving;
-            mInputHandler.OnMoveEnd -= mPlayerCtrl.Move.OnInputMoveEnd;
-        }
+        
+        // Input 시스템 Move 연결 해제
+        mPlayerCtrl?.UnSubInputEvent(mInputHandler);
+        
     }
 
     #endregion

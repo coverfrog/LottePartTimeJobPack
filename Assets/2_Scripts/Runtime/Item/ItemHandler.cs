@@ -10,6 +10,11 @@ public class ItemHandler : MonoBehaviour
     [SerializeField] private ItemDataDb mItemDataDb;
     [SerializeField] private ItemPoolGroup mItemPoolGroup;
 
+    [Title("References")]
+    [SerializeField] private Transform mSpawnParent;
+
+    // todo : 나중에 스폰 될 위치는 세부 조정 할 듯하여 우선 단일 소환
+    
     public event Action<List<ItemData>> OnPoolLoadComplete;
     
     public void OnStart(Object sender)
@@ -33,6 +38,10 @@ public class ItemHandler : MonoBehaviour
     
     public void OnPresent(OrderData orderData)
     {
+        // 아이템 획득
         mItemPoolGroup.Spawn(orderData.ItemCodeName, out Item item);
+        
+        item.transform.SetParent(mSpawnParent);
+        item.transform.localPosition = Vector3.zero;
     }
 }

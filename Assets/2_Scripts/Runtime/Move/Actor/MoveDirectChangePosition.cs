@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Direct Change Position", menuName = "Cf/Move/Direct Change Position")]
 public class MoveDirectChangePosition : MoveActor
 {
-    public override void MoveBegin(MoveHelper moveHelper, Vector2 dir)
+    public override void MoveBegin(MoveHelper moveHelper, Vector2 dir, float duration)
     {
         if (moveHelper.RigidBody)
         {
@@ -11,7 +11,7 @@ public class MoveDirectChangePosition : MoveActor
         }
     }
 
-    public override void Moving(MoveHelper moveHelper, Vector2 dir)
+    public override void Moving(MoveHelper moveHelper, Vector2 dir, float duration)
     {
         if (moveHelper.RigidBody)
         {
@@ -19,7 +19,7 @@ public class MoveDirectChangePosition : MoveActor
         }
     }
 
-    public override void MoveEnd(MoveHelper moveHelper, Vector2 dir)
+    public override void MoveEnd(MoveHelper moveHelper, Vector2 dir, float duration)
     {
         
     }

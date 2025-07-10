@@ -13,6 +13,7 @@ public partial class InputHandler
         private bool _mIsMove;
 
         private Vector2 _mCurrentDir;
+        private float _mDuration;
         
         public InputMove(
             MoveDelegate onMoveBegin,
@@ -24,9 +25,21 @@ public partial class InputHandler
             _mOnMoveEnd = onMoveEnd;
         }
         
+        public void OnUpdate(InputHandler handler)
+        {
+            if (!_mIsMove)
+            {
+                return;
+            }
+
+            _mDuration += Time.deltaTime;
+            _mOnMoving?.Invoke(_mCurrentDir, _mDuration);
+        }
+        
         public void OnInput(InputHandler handler, Vector2 dir)
         {
             _mCurrentDir = dir;
+            _mDuration = 0.0f;
             
             if (dir.sqrMagnitude > 0)
             {
@@ -36,24 +49,14 @@ public partial class InputHandler
                 }
 
                 _mIsMove = true;
-                _mOnMoveBegin?.Invoke(dir);
+                _mOnMoveBegin?.Invoke(dir, _mDuration);
             }
 
             else
             {
                 _mIsMove = false;
-                _mOnMoveEnd?.Invoke(Vector2.zero);
+                _mOnMoveEnd?.Invoke(Vector2.zero, _mDuration);
             }
-        }
-
-        public void OnUpdate(InputHandler handler)
-        {
-            if (!_mIsMove)
-            {
-                return;
-            }
-            
-            _mOnMoving?.Invoke(_mCurrentDir);
         }
     }
 }

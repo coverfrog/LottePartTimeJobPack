@@ -5,13 +5,15 @@ public class MoveHelper : MonoBehaviour
 {
     [Title("Option")]
     [SerializeField] private float mSpeedCurrent = 3.0f;
-    [SerializeField] private MoveActor mMoveActor;
 
     #region Get
 
     public float SpeedCurrent => mSpeedCurrent;
 
     #endregion
+
+    [Title("Actor")]
+    [SerializeField] private MoveActor mMoveActor;
     
     [Title("References")]
     [SerializeField] private Rigidbody mRigidBody;
@@ -30,18 +32,18 @@ public class MoveHelper : MonoBehaviour
         
     }
 
-    public void OnInputMoveBegin(Vector2 dir)
+    public void OnInputMoveBegin(Vector2 dir, float duration)
     {
-        mMoveActor?.MoveBegin(this, dir);
+        mMoveActor?.MoveBegin(this, dir, duration);
     }
 
-    public void OnInputMoving(Vector2 dir)
+    public void OnInputMoving(Vector2 dir, float duration)
     {
-        mMoveActor?.Moving(this, dir);
+        mMoveActor?.Moving(this, dir, duration);
     }
 
-    public void OnInputMoveEnd(Vector2 dir)
+    public void OnInputMoveEnd(Vector2 dir, float duration)
     {
-        mMoveActor?.MoveEnd(this, dir);
+        mMoveActor?.MoveEnd(this, dir, duration);
     }
 }
