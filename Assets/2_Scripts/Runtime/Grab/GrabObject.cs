@@ -1,7 +1,28 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
+
+#region GrabInputType
+
+public enum GrabInputType
+{
+    Tab,
+    MultiTap,
+    Hold
+}
+
+#endregion
 
 public class GrabObject : MonoBehaviour
 {
+    [Title("Option")]
+    [SerializeField] private GrabInputType mInputType;
+
+    #region Get
+
+    public GrabInputType InputType => mInputType;
+
+    #endregion
+    
     public float Distance { get; private set; }
 
     private Transform _mOriginParent;
@@ -14,7 +35,6 @@ public class GrabObject : MonoBehaviour
     }
     
     #endregion
-
 
     #region Grab
 

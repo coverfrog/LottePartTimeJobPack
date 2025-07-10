@@ -22,13 +22,11 @@ public class SceneGame0 : SceneGame
         // base
         base.Start();
         
-        /*
-            이벤트 연결 시작
-         */
         
         // 문제가 출제되는 시점 -> 아이템 핸들러에 전달 ( 스폰 )
         mOrderHandler.OnPresentAction += mItemHandler.OnPresent;
 
+        // todo : 완료 시점에 컨텐츠 진행이 되도록 세팅
         // 아이템 Pool 생성 완료 시점
         mItemHandler.OnPoolLoadComplete += (itemDataList) =>
         {

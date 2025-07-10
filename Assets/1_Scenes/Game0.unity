@@ -344,10 +344,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Grab
+  m_text: "\uC7A1\uAE30"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 251720d5e5353a046876c2c36196d273, type: 2}
+  m_sharedMaterial: {fileID: 7847670213122747378, guid: 251720d5e5353a046876c2c36196d273, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1166,7 +1166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d237676d0ff2bc2428a9588893d494e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSpeedCurrent: 3
+  mMoveSpeedCurrent: 3
+  mRotSpeedCurrent: 10
   mMoveActor: {fileID: 11400000, guid: 8b359c8bac3c6a84c9c9828bfb827d0c, type: 2}
   mRigidBody: {fileID: 1225823332}
   mAnimator: {fileID: 1225823337}

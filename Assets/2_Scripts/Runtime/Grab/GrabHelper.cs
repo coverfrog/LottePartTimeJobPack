@@ -46,15 +46,11 @@ public class GrabHelper : MonoBehaviour
     #region Event
 
     public event DetectDelegate OnActDetect;
-
     public event DetectDelegate OnActDetecting;
-
     public event DetectDelegate OnActUnDetect;
 
     public event GrabDelegate OnActGrab;
-
     public event GrabDelegate OnActGrabbing;
-
     public event GrabDelegate OnActUnGrab;
 
     #endregion
@@ -63,51 +59,83 @@ public class GrabHelper : MonoBehaviour
 
     public void OnInputGrabBegin(bool isPress, float duration)
     {
-        if (!_mIsDetect) 
-            return;
-        
-        if (_mIsGrab) 
-            return;
+        if (_mIsGrab) // 그랩 중
+        {
+            // 객체가 사라졌을 수도 있으므로 
+            if (!_mGrabObject)
+                return;
+            
+            // 플래그
+            _mIsGrab = false;
+            
+            // 놓음!
+            _mGrabObject.UnGrab(this);
+            
+            // 이벤트
+            OnActUnGrab?.Invoke(_mGrabObject);
+        }
 
-        _mIsGrab = true;
-        _mGrabObject.Grab(this);
+        else // 그랩 증이 아님
+        {
+            // 감지된 객체 없으면 불가능
+            if (!_mIsDetect) 
+                return;
+            
+            // 플래그
+            _mIsGrab = true;
+            
+            // 잡음!
+            _mGrabObject.Grab(this);
 
-        OnUnDetect(null);
+            // Detect 가 되면 안되므로
+            OnUnDetect(null);
         
-        OnActGrab?.Invoke(_mGrabObject);
+            // 이벤트
+            OnActGrab?.Invoke(_mGrabObject);
+        }
     }
     
     #endregion
 
     #region OnInputGrabbing
     
+    /// <summary>
+    /// 누르고 있는 경우 ( 구현 다시 하자 )
+    /// </summary>
+    /// <param name="isPress"></param>
+    /// <param name="duration"></param>
     public void OnInputGrabbing(bool isPress, float duration)
     {
-        if (!_mIsDetect) 
-            return;
-        
-        if (!_mIsGrab) 
-            return;
-        
-        OnActGrabbing?.Invoke(_mGrabObject);
+        // if (!_mIsDetect) 
+        //     return;
+        //
+        // if (!_mIsGrab) 
+        //     return;
+        //
+        // OnActGrabbing?.Invoke(_mGrabObject);
     }
 
     #endregion
     
     #region OnInputGrabEnd
     
+    /// <summary>
+    /// 누르던 것이 끝난 경우 ( 구현 다시 하자 )
+    /// </summary>
+    /// <param name="isPress"></param>
+    /// <param name="duration"></param>
     public void OnInputGrabEnd(bool isPress, float duration)
     {
-        if (!_mIsGrab)
-            return;
-        
-        if (!_mGrabObject)
-            return;
-        
-        _mIsGrab = false;
-        _mGrabObject.UnGrab(this);
-        
-        OnActUnGrab?.Invoke(_mGrabObject);
+        // if (!_mIsGrab)
+        //     return;
+        //
+        // if (!_mGrabObject)
+        //     return;
+        //
+        // _mIsGrab = false;
+        // _mGrabObject.UnGrab(this);
+        //
+        // OnActUnGrab?.Invoke(_mGrabObject);
     }
 
     #endregion
@@ -156,8 +184,6 @@ public class GrabHelper : MonoBehaviour
 
     private void OnUnDetect(List<GrabObject> grabObjectList)
     {
-        _mGrabObject = null;
-        
         OnActUnDetect?.Invoke(grabObjectList);
     }
 
@@ -172,6 +198,13 @@ public class GrabHelper : MonoBehaviour
 
     private void Update_Detect()
     {
+        if (_mIsGrab)
+        {
+            _mIsDetect = false;
+            
+            return;
+        }
+        
         if (mDetectActor.Detect(this, out List<GrabObject> grabObjectList))
         {
             if (_mIsDetect)

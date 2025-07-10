@@ -1,15 +1,19 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MoveHelper : MonoBehaviour
 {
     [Title("Option")]
-    [SerializeField] private float mSpeedCurrent = 3.0f;
+    [SerializeField] private float mMoveSpeedCurrent = 3.0f;
+    [SerializeField] private float mRotSpeedCurrent = 10.0f;
 
     #region Get
 
-    public float SpeedCurrent => mSpeedCurrent;
+    public float MoveSpeedCurrent => mMoveSpeedCurrent;
 
+    public float RotSpeedCurrent => mRotSpeedCurrent;
+    
     #endregion
 
     [Title("Actor")]

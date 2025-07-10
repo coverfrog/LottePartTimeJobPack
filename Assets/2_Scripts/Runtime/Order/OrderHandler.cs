@@ -65,7 +65,7 @@ public class OrderHandler : MonoBehaviour
     {
         CLog.Log($"문제 제출 : {orderData.ItemCodeName}");
         
-        // 제출자에게 정보 전달
+        // 제출자에게 정보 전달 ( 정답을 알아야 하므로 )
         mReporter.OnPresent(orderData);
         
         // 이벤트 실행
